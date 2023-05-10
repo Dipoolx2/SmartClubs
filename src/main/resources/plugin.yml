@@ -1,0 +1,6 @@
+name: SmartClubs
+version: '${project.version}'
+main: com.zygro.smartclubs.SmartClubs
+api-version: 1.19
+authors: [Zygro]
+description: Custom player groups for your Spigot server.
