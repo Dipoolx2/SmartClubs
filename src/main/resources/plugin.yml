@@ -9,3 +9,7 @@ commands:
   test:
     description: Tests the commands out
     usage: /<command>
+  typecreate:
+    description: Creates new group types.
+    usage: /<command> <name>
+    aliases: [tcreate]

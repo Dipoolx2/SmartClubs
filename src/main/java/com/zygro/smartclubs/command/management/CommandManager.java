@@ -3,6 +3,7 @@ package com.zygro.smartclubs.command.management;
 import com.zygro.smartclubs.SmartClubs;
 import com.zygro.smartclubs.command.impl.TestCommand;
 import com.zygro.smartclubs.command.impl.TestTwoCommand;
+import com.zygro.smartclubs.command.impl.grouptype.create.TypeCreate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,6 +29,9 @@ public class CommandManager implements CommandExecutor {
         this.baseCommands.add(testCommand);
         TestTwoCommand testTwoCommand = new TestTwoCommand(testCommand);
         testCommand.subCommands.add(testTwoCommand);
+
+        TypeCreate typeCreateCommand = new TypeCreate();
+        this.baseCommands.add(typeCreateCommand);
     }
 
     private void registerCommands() {
@@ -62,7 +66,7 @@ public class CommandManager implements CommandExecutor {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            commandSender.sendMessage("&cInproper usage of command (" + base.syntax + ").");
+            commandSender.sendMessage("&cImproper usage of command (" + base.syntax + ").");
         }
 
         return false;
