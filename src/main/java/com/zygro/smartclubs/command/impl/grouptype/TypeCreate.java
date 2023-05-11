@@ -1,4 +1,4 @@
-package com.zygro.smartclubs.command.impl.grouptype.create;
+package com.zygro.smartclubs.command.impl.grouptype;
 
 import com.zygro.smartclubs.SmartClubs;
 import com.zygro.smartclubs.command.management.BaseCommand;

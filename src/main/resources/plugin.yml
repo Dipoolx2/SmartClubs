@@ -13,3 +13,7 @@ commands:
     description: Creates new group types.
     usage: /<command> <name>
     aliases: [tcreate]
+  groupcreate:
+    description: Creates new groups.
+    usage: /<command> <type> <name>
+    aliases: [gcreate]

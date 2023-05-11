@@ -23,8 +23,13 @@ public class GroupManager {
         groups.get(group.groupType).add(group);
     }
 
-    public HashSet<Group> getGroups(GroupType groupType) {
-        return this.groups.get(groupType);
+    public GroupType getGroupTypeFromName(String groupTypeName) {
+        for (GroupType groupType : this.groupTypes) {
+            if (groupType.groupTypeName.equalsIgnoreCase(groupTypeName)) {
+                return groupType;
+            }
+        }
+        return null;
     }
 
     public void addGroupType(GroupType groupType) {

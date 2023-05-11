@@ -3,6 +3,7 @@ package com.zygro.smartclubs.command.management;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class BaseCommand extends PluginCommand {
 
@@ -20,9 +21,11 @@ public abstract class BaseCommand extends PluginCommand {
     @Override
     protected boolean checkCmdMatch(String cmd) {
         for (String alias : aliases) {
-            if (this.cmd.equalsIgnoreCase(alias)) return true;
+            if (cmd.equalsIgnoreCase(alias)) {
+                return true;
+            }
         }
-        return this.cmd.equalsIgnoreCase(cmd);
+        return false;
     }
 
 }

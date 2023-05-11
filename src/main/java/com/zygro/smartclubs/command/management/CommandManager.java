@@ -3,7 +3,9 @@ package com.zygro.smartclubs.command.management;
 import com.zygro.smartclubs.SmartClubs;
 import com.zygro.smartclubs.command.impl.TestCommand;
 import com.zygro.smartclubs.command.impl.TestTwoCommand;
-import com.zygro.smartclubs.command.impl.grouptype.create.TypeCreate;
+import com.zygro.smartclubs.command.impl.group.GroupCreate;
+import com.zygro.smartclubs.command.impl.grouptype.TypeCreate;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,10 +34,17 @@ public class CommandManager implements CommandExecutor {
 
         TypeCreate typeCreateCommand = new TypeCreate();
         this.baseCommands.add(typeCreateCommand);
+
+        GroupCreate groupCreateCommand = new GroupCreate();
+        this.baseCommands.add(groupCreateCommand);
     }
 
     private void registerCommands() {
-        this.baseCommands.forEach(c -> {c.aliases.forEach(a -> Objects.requireNonNull(pl.getCommand(a)).setExecutor(this));});
+        for (BaseCommand baseCommand : this.baseCommands) {
+            for (String alias : baseCommand.aliases) {
+                Objects.requireNonNull(pl.getCommand(alias)).setExecutor(this);
+            }
+        }
     }
 
     @Override
@@ -59,6 +68,7 @@ public class CommandManager implements CommandExecutor {
             return true;
         }
         if (!cmd.isSenderAuthorized(commandSender)) {
+            commandSender.sendMessage(ChatColor.RED + "You're not authorized to run this command.");
             return true;
         }
         try {
