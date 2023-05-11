@@ -4,3 +4,8 @@ main: com.zygro.smartclubs.SmartClubs
 api-version: 1.19
 authors: [Zygro]
 description: Custom player groups for your Spigot server.
+
+commands:
+  test:
+    description: Tests the commands out
+    usage: /<command>

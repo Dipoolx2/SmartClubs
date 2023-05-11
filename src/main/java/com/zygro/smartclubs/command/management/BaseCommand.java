@@ -12,6 +12,7 @@ public abstract class BaseCommand extends PluginCommand {
         super(cmd, permission, syntax);
 
         this.aliases = new ArrayList<>();
+        this.aliases.add(cmd);
     }
     @Override
     public abstract void execute(CommandSender sender, String[] args);

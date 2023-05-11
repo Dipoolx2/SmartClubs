@@ -8,7 +8,7 @@ public abstract class PluginCommand {
 
     protected final String cmd;
     private final String permission;
-    private final String syntax;
+    protected final String syntax;
 
     protected final ArrayList<SubCommand> subCommands;
 
@@ -23,5 +23,9 @@ public abstract class PluginCommand {
     public abstract void execute(CommandSender sender, String[] args);
 
     protected abstract boolean checkCmdMatch(String cmd);
+
+    protected boolean isSenderAuthorized(CommandSender sender) {
+        return sender.hasPermission(this.permission);
+    }
 
 }
