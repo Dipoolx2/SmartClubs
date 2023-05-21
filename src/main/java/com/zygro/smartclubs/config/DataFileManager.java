@@ -5,21 +5,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class ConfigFileManager {
+public class DataFileManager {
     private JavaPlugin pl;
 
-    private YamlConfiguration groupTypesConfig;
-    private YamlConfiguration groupsConfig;
-    private YamlConfiguration profilesConfig;
+    protected YamlConfiguration groupTypesConfig;
+    protected YamlConfiguration groupsConfig;
+    protected YamlConfiguration profilesConfig;
 
-    public ConfigFileManager(JavaPlugin pl) {
+    public DataFileManager(JavaPlugin pl) {
         this.pl = pl;
 
         createDataFiles();
-        initializeConfigurationFiles();
+        initializeDataFiles();
     }
 
-    public void initializeConfigurationFiles() {
+    private void initializeDataFiles() {
         // Initialize group types file
         File group_types_file = new File(pl.getDataFolder(), "group-types.yml");
         this.groupTypesConfig = YamlConfiguration.loadConfiguration(group_types_file);
@@ -47,17 +47,5 @@ public class ConfigFileManager {
         if (!groupsFile.exists()) {
             pl.saveResource("groups.yml", false);
         }
-    }
-
-    public YamlConfiguration getGroupsConfig() {
-        return groupsConfig;
-    }
-
-    public YamlConfiguration getGroupTypesConfig() {
-        return groupTypesConfig;
-    }
-
-    public YamlConfiguration getProfilesConfig() {
-        return profilesConfig;
     }
 }

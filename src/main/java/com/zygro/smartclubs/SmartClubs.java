@@ -1,7 +1,7 @@
 package com.zygro.smartclubs;
 
 import com.zygro.smartclubs.command.management.CommandManager;
-import com.zygro.smartclubs.config.ConfigurationManager;
+import com.zygro.smartclubs.config.LocalDataManager;
 import com.zygro.smartclubs.group.management.GroupManager;
 import com.zygro.smartclubs.profile.ProfileManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +12,7 @@ public final class SmartClubs extends JavaPlugin {
     private CommandManager commandManager;
     public GroupManager groupManager;
     public ProfileManager profileManager;
-    public ConfigurationManager configurationManager;
+    public LocalDataManager localDataManager;
 
     @Override
     public void onEnable() {
@@ -24,8 +24,8 @@ public final class SmartClubs extends JavaPlugin {
         this.getLogger().info("Initializing Profile Manager");
         this.profileManager = new ProfileManager(this);
 
-        this.getLogger().info("Initializing Configuration Manager");
-        this.configurationManager = new ConfigurationManager(this);
+        this.getLogger().info("Initializing Local Data Manager");
+        this.localDataManager = new LocalDataManager(this);
     }
 
     @Override
