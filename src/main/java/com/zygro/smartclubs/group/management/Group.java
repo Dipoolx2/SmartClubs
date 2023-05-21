@@ -1,17 +1,26 @@
 package com.zygro.smartclubs.group.management;
 
+import com.zygro.smartclubs.profile.PlayerProfile;
+
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Group {
     private final UUID uniqueId;
     private String groupName;
+    private HashSet<PlayerProfile> members;
     protected GroupType groupType;
 
     public Group(String groupName, GroupType groupType) {
         this.groupName = groupName;
         this.groupType = groupType;
         this.uniqueId = UUID.randomUUID();
+        this.members = new HashSet<>();
+    }
+
+    public void addProfileToGroup(PlayerProfile profile) {
+        members.add(profile);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.zygro.smartclubs;
 
 import com.zygro.smartclubs.command.management.CommandManager;
 import com.zygro.smartclubs.group.management.GroupManager;
+import com.zygro.smartclubs.profile.ProfileManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SmartClubs extends JavaPlugin {
@@ -9,6 +10,7 @@ public final class SmartClubs extends JavaPlugin {
     public static String PERM_BASE = "smartclubs";
     private CommandManager commandManager;
     public GroupManager groupManager;
+    public ProfileManager profileManager;
 
     @Override
     public void onEnable() {
@@ -17,6 +19,7 @@ public final class SmartClubs extends JavaPlugin {
         this.getLogger().info("Initializing Command Manager");
         this.commandManager = new CommandManager(this);
         this.groupManager = new GroupManager(this);
+        this.profileManager = new ProfileManager(this);
     }
 
     @Override
