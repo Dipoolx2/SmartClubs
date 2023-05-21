@@ -6,18 +6,26 @@ import com.zygro.smartclubs.group.management.GroupManager;
 import com.zygro.smartclubs.group.management.GroupType;
 import com.zygro.smartclubs.profile.ProfileManager;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class GroupJoin extends BaseCommand {
 
 
     public GroupJoin() {
         super("groupjoin", SmartClubs.PERM_BASE+".groupjoin", "/groupjoin <type> <name>");
+        aliases.add("gjoin");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.RED + "You need to be a player to execute this command!");
+            return;
+        }
         GroupManager gm = SmartClubs.INSTANCE.groupManager;
+        ProfileManager pm = SmartClubs.INSTANCE.profileManager;
         if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Improper usage of command (" + syntax + ").");
             return;
@@ -31,7 +39,12 @@ public class GroupJoin extends BaseCommand {
         String[] argsWithoutType = shortenArray(args, typeName.count);
         String groupName = String.join(" ", argsWithoutType);
 
-        sender.sendMessage(ChatColor.GREEN + "Created a new " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + ".");
+        if (gm.addProfileToGroup(groupName, groupType, pm.getPlayerProfile((OfflinePlayer)sender))) {
+            sender.sendMessage(ChatColor.GREEN + "Joined " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + "!");
+        } else {
+            sender.sendMessage(ChatColor.RED + "Couldn't join group. Please try again later.");
+        }
+
     }
 
     private String[] shortenArray(String[] arr, int typeLength) {

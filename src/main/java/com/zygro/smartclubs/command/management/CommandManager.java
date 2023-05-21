@@ -4,6 +4,7 @@ import com.zygro.smartclubs.SmartClubs;
 import com.zygro.smartclubs.command.impl.TestCommand;
 import com.zygro.smartclubs.command.impl.TestTwoCommand;
 import com.zygro.smartclubs.command.impl.group.GroupCreate;
+import com.zygro.smartclubs.command.impl.group.GroupJoin;
 import com.zygro.smartclubs.command.impl.grouptype.TypeCreate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -37,6 +38,8 @@ public class CommandManager implements CommandExecutor {
 
         GroupCreate groupCreateCommand = new GroupCreate();
         this.baseCommands.add(groupCreateCommand);
+        GroupJoin groupJoinCommand = new GroupJoin();
+        this.baseCommands.add(groupJoinCommand);
     }
 
     private void registerCommands() {

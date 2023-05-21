@@ -19,8 +19,12 @@ public class Group {
         this.members = new HashSet<>();
     }
 
-    public void addProfileToGroup(PlayerProfile profile) {
+    protected void addProfileToGroup(PlayerProfile profile) {
         members.add(profile);
+    }
+
+    protected boolean compareName(String supposedName) {
+        return this.groupName.equalsIgnoreCase(supposedName);
     }
 
     @Override

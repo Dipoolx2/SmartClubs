@@ -2,6 +2,7 @@ package com.zygro.smartclubs.command.impl.group;
 
 import com.zygro.smartclubs.SmartClubs;
 import com.zygro.smartclubs.command.management.BaseCommand;
+import com.zygro.smartclubs.group.management.Group;
 import com.zygro.smartclubs.group.management.GroupManager;
 import com.zygro.smartclubs.group.management.GroupType;
 import org.bukkit.ChatColor;
@@ -29,6 +30,7 @@ public class GroupCreate extends BaseCommand {
         String[] argsWithoutType = shortenArray(args, typeName.count);
         String groupName = String.join(" ", argsWithoutType);
 
+        gm.addGroup(new Group(groupName, groupType));
         sender.sendMessage(ChatColor.GREEN + "Created a new " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + ".");
     }
 

@@ -17,3 +17,7 @@ commands:
     description: Creates new groups.
     usage: /<command> <type> <name>
     aliases: [gcreate]
+  groupjoin:
+    description: Joins groups.
+    usage: /<command> <type> <name>
+    aliases: [gjoin]
