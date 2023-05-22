@@ -20,14 +20,16 @@ public class ProfileManager {
             @EventHandler
             public void onPlayerJoin(PlayerJoinEvent event) {
                 if(getPlayerProfile(event.getPlayer()) != null) return;
-                initializeNewProfile(event.getPlayer());
-                System.out.println("Adding player " + event.getPlayer().getName() + " to profiles.");
+                PlayerProfile newProfile = initializeNewProfile(event.getPlayer());
+                SmartClubs.INSTANCE.localDataManager.profileData.writeProfile(newProfile);
             }
         }, SmartClubs.INSTANCE);
     }
 
-    public void initializeNewProfile(OfflinePlayer player) {
+    public PlayerProfile initializeNewProfile(OfflinePlayer player) {
+        PlayerProfile newProfile = new PlayerProfile(player);
         this.profiles.add(new PlayerProfile(player));
+        return newProfile;
     }
 
     public PlayerProfile getPlayerProfile(OfflinePlayer player) {

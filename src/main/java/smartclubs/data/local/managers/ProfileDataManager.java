@@ -2,6 +2,7 @@ package smartclubs.data.local.managers;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import smartclubs.profile.PlayerProfile;
 import smartclubs.profile.ProfileModel;
 
 import java.io.File;
@@ -19,8 +20,9 @@ public class ProfileDataManager {
         initializeDataFile();
     }
 
-    public void writeProfile(ProfileModel profile) {
-        profilesData.set(profile.uniqueId.toString()+".profile-owner", profile.profileOwner.getUniqueId().toString());
+    public void writeProfile(PlayerProfile profile) {
+        ProfileModel profileModel = new ProfileModel(profile);
+        profilesData.set(profileModel.uniqueId.toString()+".profile-owner", profileModel.profileOwner.getUniqueId().toString());
         try {
             profilesData.save(profilesFile);
         } catch (IOException ex) {
