@@ -1,4 +1,4 @@
-package smartclubs.config;
+package smartclubs.data.local;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

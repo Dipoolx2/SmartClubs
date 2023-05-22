@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerProfile {
-    private UUID uniqueId;
+    public final UUID uniqueId;
     protected OfflinePlayer profileOwner;
 
     public PlayerProfile(OfflinePlayer offlinePlayer) {

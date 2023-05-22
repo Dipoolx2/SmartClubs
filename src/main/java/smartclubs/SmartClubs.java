@@ -1,7 +1,7 @@
 package smartclubs;
 
 import smartclubs.command.management.CommandManager;
-import smartclubs.config.LocalDataManager;
+import smartclubs.data.local.LocalDataManager;
 import smartclubs.group.management.GroupManager;
 import smartclubs.profile.ProfileManager;
 import org.bukkit.plugin.java.JavaPlugin;
