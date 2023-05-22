@@ -7,9 +7,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Group {
-    private final UUID uniqueId;
-    private String groupName;
-    private HashSet<PlayerProfile> members;
+    protected final UUID uniqueId;
+    protected String groupName;
+    protected HashSet<PlayerProfile> members;
     protected GroupType groupType;
 
     public Group(String groupName, GroupType groupType) {

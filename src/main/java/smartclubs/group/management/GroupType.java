@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class GroupType {
-    private final UUID uniqueId;
+    public final UUID uniqueId;
     protected String groupTypeName;
 
     public GroupType(String groupTypeName) {

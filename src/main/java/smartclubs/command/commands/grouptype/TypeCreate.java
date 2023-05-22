@@ -1,4 +1,4 @@
-package smartclubs.command.impl.grouptype;
+package smartclubs.command.commands.grouptype;
 
 import smartclubs.SmartClubs;
 import smartclubs.command.management.BaseCommand;
