@@ -1,7 +1,7 @@
-package com.zygro.smartclubs.command.impl;
+package smartclubs.command.impl;
 
-import com.zygro.smartclubs.SmartClubs;
-import com.zygro.smartclubs.command.management.BaseCommand;
+import smartclubs.SmartClubs;
+import smartclubs.command.management.BaseCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 

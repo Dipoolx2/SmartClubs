@@ -1,7 +1,7 @@
-package com.zygro.smartclubs.group.management;
+package smartclubs.group.management;
 
-import com.zygro.smartclubs.SmartClubs;
-import com.zygro.smartclubs.profile.PlayerProfile;
+import smartclubs.SmartClubs;
+import smartclubs.profile.PlayerProfile;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package com.zygro.smartclubs.group.management;
+package smartclubs.group.management;
 
 import java.util.Objects;
 import java.util.UUID;

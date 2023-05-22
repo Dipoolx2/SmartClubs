@@ -1,6 +1,6 @@
-package com.zygro.smartclubs.profile;
+package smartclubs.profile;
 
-import com.zygro.smartclubs.SmartClubs;
+import smartclubs.SmartClubs;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;

@@ -1,9 +1,9 @@
-package com.zygro.smartclubs;
+package smartclubs;
 
-import com.zygro.smartclubs.command.management.CommandManager;
-import com.zygro.smartclubs.config.LocalDataManager;
-import com.zygro.smartclubs.group.management.GroupManager;
-import com.zygro.smartclubs.profile.ProfileManager;
+import smartclubs.command.management.CommandManager;
+import smartclubs.config.LocalDataManager;
+import smartclubs.group.management.GroupManager;
+import smartclubs.profile.ProfileManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SmartClubs extends JavaPlugin {

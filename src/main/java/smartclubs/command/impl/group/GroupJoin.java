@@ -1,27 +1,36 @@
-package com.zygro.smartclubs.command.impl.group;
+package smartclubs.command.impl.group;
 
-import com.zygro.smartclubs.SmartClubs;
-import com.zygro.smartclubs.command.management.BaseCommand;
-import com.zygro.smartclubs.group.management.Group;
-import com.zygro.smartclubs.group.management.GroupManager;
-import com.zygro.smartclubs.group.management.GroupType;
+import smartclubs.SmartClubs;
+import smartclubs.command.management.BaseCommand;
+import smartclubs.group.management.GroupManager;
+import smartclubs.group.management.GroupType;
+import smartclubs.profile.ProfileManager;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class GroupCreate extends BaseCommand {
-    public GroupCreate() {
-        super("groupcreate", SmartClubs.PERM_BASE+".gcreate", "/gcreate <type> <name>");
-        aliases.add("gcreate");
+public class GroupJoin extends BaseCommand {
+
+
+    public GroupJoin() {
+        super("groupjoin", SmartClubs.PERM_BASE+".groupjoin", "/groupjoin <type> <name>");
+        aliases.add("gjoin");
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.RED + "You need to be a player to execute this command!");
+            return;
+        }
         GroupManager gm = SmartClubs.INSTANCE.groupManager;
+        ProfileManager pm = SmartClubs.INSTANCE.profileManager;
         if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Improper usage of command (" + syntax + ").");
             return;
         }
-        NameAndCount typeName = getTypeName(args);
+        GroupJoin.NameAndCount typeName = getTypeName(args);
         GroupType groupType = gm.getGroupTypeFromName(typeName.str);
         if (groupType == null) {
             sender.sendMessage(ChatColor.RED + "Group type " + ChatColor.YELLOW + typeName.str + ChatColor.RED + " does not exist. Use quotation marks (\" or ') when using spaces.");
@@ -30,8 +39,12 @@ public class GroupCreate extends BaseCommand {
         String[] argsWithoutType = shortenArray(args, typeName.count);
         String groupName = String.join(" ", argsWithoutType);
 
-        gm.addGroup(new Group(groupName, groupType));
-        sender.sendMessage(ChatColor.GREEN + "Created a new " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + ".");
+        if (gm.addProfileToGroup(groupName, groupType, pm.getPlayerProfile((OfflinePlayer)sender))) {
+            sender.sendMessage(ChatColor.GREEN + "Joined " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + "!");
+        } else {
+            sender.sendMessage(ChatColor.RED + "Couldn't join group. Please try again later.");
+        }
+
     }
 
     private String[] shortenArray(String[] arr, int typeLength) {
@@ -41,14 +54,14 @@ public class GroupCreate extends BaseCommand {
         return result;
     }
 
-    private NameAndCount getTypeName(String[] args) {
+    private GroupJoin.NameAndCount getTypeName(String[] args) {
         char openingQuote = '!';
         int wordCount = 0;
         if(args[0].charAt(0) == '\'' || args[0].charAt(0) == '"') {
             wordCount++;
             openingQuote = args[0].charAt(0);
         } else {
-            return new NameAndCount(args[0], 1);
+            return new GroupJoin.NameAndCount(args[0], 1);
         }
         char closingQuote = '!';
         for (String word : args) {
@@ -59,10 +72,10 @@ public class GroupCreate extends BaseCommand {
             }
             wordCount++;
         }
-        if (closingQuote == '!' || (openingQuote != closingQuote)) return new NameAndCount(args[0], 1);
+        if (closingQuote == '!' || (openingQuote != closingQuote)) return new GroupJoin.NameAndCount(args[0], 1);
 
         String[] updatedArgs = nameWithoutQuotes(args, wordCount);
-        return new NameAndCount(String.join(" ", updatedArgs), wordCount);
+        return new GroupJoin.NameAndCount(String.join(" ", updatedArgs), wordCount);
     }
 
     private String[] nameWithoutQuotes(String[] args, int wordCount) {

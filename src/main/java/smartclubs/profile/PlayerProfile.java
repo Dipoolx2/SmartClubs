@@ -1,4 +1,4 @@
-package com.zygro.smartclubs.profile;
+package smartclubs.profile;
 
 import org.bukkit.OfflinePlayer;
 

@@ -1,9 +1,8 @@
-package com.zygro.smartclubs.command.management;
+package smartclubs.command.management;
 
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public abstract class BaseCommand extends PluginCommand {
 

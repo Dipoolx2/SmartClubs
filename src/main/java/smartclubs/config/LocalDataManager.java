@@ -1,4 +1,4 @@
-package com.zygro.smartclubs.config;
+package smartclubs.config;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,8 +16,6 @@ public class LocalDataManager {
         this.dataFileManager = new DataFileManager(pl);
         initializeDataFiles();
     }
-
-
 
     private void initializeDataFiles() {
         this.groupTypesData = this.dataFileManager.groupTypesConfig;

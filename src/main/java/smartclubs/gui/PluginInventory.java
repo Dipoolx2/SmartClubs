@@ -1,4 +1,4 @@
-package com.zygro.smartclubs.gui;
+package smartclubs.gui;
 
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;

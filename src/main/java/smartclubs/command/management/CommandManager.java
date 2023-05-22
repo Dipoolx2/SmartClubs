@@ -1,11 +1,11 @@
-package com.zygro.smartclubs.command.management;
+package smartclubs.command.management;
 
-import com.zygro.smartclubs.SmartClubs;
-import com.zygro.smartclubs.command.impl.TestCommand;
-import com.zygro.smartclubs.command.impl.TestTwoCommand;
-import com.zygro.smartclubs.command.impl.group.GroupCreate;
-import com.zygro.smartclubs.command.impl.group.GroupJoin;
-import com.zygro.smartclubs.command.impl.grouptype.TypeCreate;
+import smartclubs.SmartClubs;
+import smartclubs.command.impl.TestCommand;
+import smartclubs.command.impl.TestTwoCommand;
+import smartclubs.command.impl.group.GroupCreate;
+import smartclubs.command.impl.group.GroupJoin;
+import smartclubs.command.impl.grouptype.TypeCreate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
