@@ -13,7 +13,6 @@ public final class SmartClubs extends JavaPlugin {
     public GroupManager groupManager;
     public ProfileManager profileManager;
     public LocalDataManager localDataManager;
-
     @Override
     public void onEnable() {
         INSTANCE = this;
