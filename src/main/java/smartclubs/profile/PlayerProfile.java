@@ -6,11 +6,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerProfile {
-    public final UUID uniqueId;
+    protected final UUID uniqueId;
     protected OfflinePlayer profileOwner;
 
     public PlayerProfile(OfflinePlayer offlinePlayer) {
         this.profileOwner = offlinePlayer;
+        System.out.println("Creating new random uuid for player " + offlinePlayer.getName());
         this.uniqueId = UUID.randomUUID();
     }
 

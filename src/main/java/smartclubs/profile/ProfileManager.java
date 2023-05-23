@@ -28,7 +28,7 @@ public class ProfileManager {
 
     public PlayerProfile initializeNewProfile(OfflinePlayer player) {
         PlayerProfile newProfile = new PlayerProfile(player);
-        this.profiles.add(new PlayerProfile(player));
+        this.profiles.add(newProfile);
         return newProfile;
     }
 

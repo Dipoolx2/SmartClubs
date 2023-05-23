@@ -4,6 +4,7 @@ import smartclubs.SmartClubs;
 import smartclubs.command.management.BaseCommand;
 import smartclubs.group.management.GroupManager;
 import smartclubs.group.management.GroupType;
+import smartclubs.profile.PlayerProfile;
 import smartclubs.profile.ProfileManager;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -38,11 +39,11 @@ public class GroupJoin extends BaseCommand {
         }
         String[] argsWithoutType = shortenArray(args, typeName.count);
         String groupName = String.join(" ", argsWithoutType);
-
-        if (gm.addProfileToGroup(groupName, groupType, pm.getPlayerProfile((OfflinePlayer)sender))) {
+        PlayerProfile profile = pm.getPlayerProfile((OfflinePlayer)sender);
+        if (gm.addProfileToGroup(groupName, groupType, profile)) {
             sender.sendMessage(ChatColor.GREEN + "Joined " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + "!");
         } else {
-            sender.sendMessage(ChatColor.RED + "Couldn't join group. Please try again later.");
+            sender.sendMessage(ChatColor.RED + "Couldn't join "+typeName.str.toLowerCase()+". Are you already in it?");
         }
 
     }

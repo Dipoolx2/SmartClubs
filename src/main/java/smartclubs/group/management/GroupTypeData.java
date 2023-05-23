@@ -2,11 +2,11 @@ package smartclubs.group.management;
 
 import java.util.UUID;
 
-public class GroupTypeModel {
+public class GroupTypeData {
     public final UUID uniqueId;
     public String groupTypeName;
 
-    public GroupTypeModel(GroupType groupType) {
+    public GroupTypeData(GroupType groupType) {
         this.uniqueId = groupType.uniqueId;
         this.groupTypeName = groupType.groupTypeName;
     }
