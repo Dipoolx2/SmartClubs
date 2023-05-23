@@ -44,6 +44,16 @@ public class GroupManager {
         return false;
     }
 
+    public boolean isGroupNameTaken(GroupType groupType, String groupName) {
+        if (!groups.containsKey(groupType)) {
+            return false;
+        }
+        for (Group group : groups.get(groupType)) {
+            if (group.compareName(groupName)) return true;
+        }
+        return false;
+    }
+
     // Case sensitive
     private Group getGroupFromName(String groupName, GroupType groupType) {
         if (!groups.containsKey(groupType)) {

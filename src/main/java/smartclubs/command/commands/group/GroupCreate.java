@@ -31,6 +31,10 @@ public class GroupCreate extends BaseCommand {
         String groupName = String.join(" ", argsWithoutType);
 
         Group newGroup = new Group(groupName, groupType);
+        if (gm.isGroupNameTaken(groupType, groupName)) {
+            sender.sendMessage(ChatColor.RED + "Group of type " + ChatColor.YELLOW + typeName.str + ChatColor.RED + " already exists with name " + ChatColor.YELLOW + groupName + ChatColor.RED + ".");
+            return;
+        }
         gm.addGroup(newGroup);
         SmartClubs.INSTANCE.localDataManager.groupsData.writeGroup(newGroup);
         sender.sendMessage(ChatColor.GREEN + "Created a new " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + ".");
