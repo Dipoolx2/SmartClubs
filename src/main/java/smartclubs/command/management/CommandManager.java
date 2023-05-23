@@ -79,7 +79,7 @@ public class CommandManager implements CommandExecutor {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            commandSender.sendMessage("&cImproper usage of command (" + base.syntax + ").");
+            commandSender.sendMessage(ChatColor.RED + "Improper usage of command (" + base.syntax + ").");
         }
 
         return false;

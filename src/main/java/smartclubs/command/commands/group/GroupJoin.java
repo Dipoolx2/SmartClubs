@@ -25,28 +25,35 @@ public class GroupJoin extends BaseCommand {
             sender.sendMessage(ChatColor.RED + "You need to be a player to execute this command!");
             return;
         }
+
         GroupManager gm = SmartClubs.INSTANCE.groupManager;
         ProfileManager pm = SmartClubs.INSTANCE.profileManager;
+
         if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Improper usage of command (" + syntax + ").");
             return;
         }
+
         GroupJoin.NameAndCount typeName = getTypeName(args);
         GroupType groupType = gm.getGroupTypeFromName(typeName.str);
         if (groupType == null) {
-            sender.sendMessage(ChatColor.RED + "Group type " + ChatColor.YELLOW + typeName.str + ChatColor.RED + " does not exist. Use quotation marks (\" or ') when using spaces.");
+            sender.sendMessage(ChatColor.RED + "Group type " + ChatColor.YELLOW + typeName.str + ChatColor.RED +
+                    " does not exist. Use quotation marks (\" or ') when using spaces.");
             return;
         }
-        String[] argsWithoutType = shortenArray(args, typeName.count);
-        String groupName = String.join(" ", argsWithoutType);
-        PlayerProfile profile = pm.getPlayerProfile((OfflinePlayer)sender);
-        if (gm.addProfileToGroup(groupName, groupType, profile)) {
-            sender.sendMessage(ChatColor.GREEN + "Joined " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + "!");
-        } else {
-            sender.sendMessage(ChatColor.RED + "Couldn't join "+typeName.str.toLowerCase()+". Are you already in it?");
-        }
 
+        String groupName = String.join(" ", shortenArray(args, typeName.count));
+        PlayerProfile profile = pm.getPlayerProfile((OfflinePlayer) sender);
+
+        if (gm.addProfileToGroup(groupName, groupType, profile)) {
+            sender.sendMessage(ChatColor.GREEN + "Joined " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN +
+                    " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + "!");
+        } else {
+            sender.sendMessage(ChatColor.RED + "Couldn't join " + typeName.str.toLowerCase() +
+                    ". Are you already in it?");
+        }
     }
+
 
     private String[] shortenArray(String[] arr, int typeLength) {
         String[] result = new String[arr.length - typeLength];
