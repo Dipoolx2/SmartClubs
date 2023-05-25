@@ -10,7 +10,9 @@ import smartclubs.profile.ProfileData;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProfileDataManager {
 
@@ -50,6 +52,13 @@ public class ProfileDataManager {
             return false;
         }
         return true;
+    }
+
+    public List<PlayerProfile> getProfiles() {
+        Set<PlayerProfile> result = new HashSet<>();
+        for (String userId : profilesData.getKeys(false)) {
+
+        }
     }
 
     public void writeProfile(PlayerProfile profile) {
