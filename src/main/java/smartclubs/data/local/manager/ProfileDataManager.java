@@ -1,6 +1,7 @@
 package smartclubs.data.local.manager;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import smartclubs.group.management.Group;
@@ -24,12 +25,20 @@ public class ProfileDataManager {
             initializeProfilesFile();
     }
 
+    public List<PlayerProfile> getPlayerProfiles() {
+        List<PlayerProfile> playerProfiles = new ArrayList<>();
+        for (String profileUuid : Objects.requireNonNull(profilesData.getConfigurationSection("")).getKeys(false)) {
+            playerProfiles.add(new PlayerProfile(UUID.fromString(profilesData.getString(profileUuid)+".profile-owner")));
+        }
+        return playerProfiles;
+    }
+
     public PlayerProfile getPlayerProfile(UUID playerUuid) {
         if (pl.getServer().getOfflinePlayer(playerUuid).getFirstPlayed() == 0) {
             return null;
         }
         if (profilesData.isConfigurationSection(playerUuid.toString())) {
-            return new PlayerProfile(Bukkit.getOfflinePlayer(playerUuid));
+            return new PlayerProfile(playerUuid);
         }
         return null;
     }
@@ -37,10 +46,10 @@ public class ProfileDataManager {
     public boolean writeGroupToProfile(PlayerProfile profile, Group group) {
         ProfileData profileData = new ProfileData(profile);
         GroupData groupData = new GroupData(group);
-        String listPath = profileData.profileOwner.getUniqueId().toString()+".groups."+groupData.groupType.uniqueId;
+        String listPath = profileData.profileOwnerUuid.toString()+".groups."+groupData.groupType.uniqueId;
 
-        if (!profilesData.contains(profileData.profileOwner.getUniqueId().toString())) {
-            pl.getLogger().severe("Can't add group to profile in local data: Profile " + profileData.profileOwner.getUniqueId().toString() +" isn't in local data.");
+        if (!profilesData.contains(profileData.profileOwnerUuid.toString())) {
+            pl.getLogger().severe("Can't add group to profile in local data: Profile " + profileData.profileOwnerUuid.toString() +" isn't in local data.");
             return false;
         }
         if (!profilesData.contains(listPath)) {
@@ -64,7 +73,7 @@ public class ProfileDataManager {
 
     public void writeProfile(PlayerProfile profile) {
         ProfileData profileData = new ProfileData(profile);
-        profilesData.set(profileData.profileOwner.getUniqueId().toString()+".profile-owner", profileData.profileOwner.getUniqueId().toString());
+        profilesData.set(profileData.profileOwnerUuid.toString()+".profile-owner", profileData.profileOwnerUuid.toString());
         try {
             profilesData.save(profilesFile);
         } catch (IOException ex) {

@@ -28,7 +28,7 @@ public class GroupDataManager {
         GroupData groupData = new GroupData(group);
         this.groupsData.set(groupData.groupType.uniqueId+"."+ groupData.uniqueId +".name", groupData.groupName);
         List<String> membersList = new ArrayList<>();
-        groupData.members.forEach(m -> membersList.add(m.profileOwner.getUniqueId().toString()));
+        groupData.members.forEach(m -> membersList.add(m.profileOwnerUuid.toString()));
         this.groupsData.set(groupData.groupType.uniqueId+"."+ groupData.uniqueId +".members", membersList);
 
         try {
@@ -50,8 +50,8 @@ public class GroupDataManager {
             groupsData.set(listPath, new ArrayList<String>());
         }
         List<String> stringList = groupsData.getStringList(listPath);
-        if (!stringList.contains(profileData.profileOwner.getUniqueId().toString())) {
-            stringList.add(profileData.profileOwner.getUniqueId().toString());
+        if (!stringList.contains(profileData.profileOwnerUuid.toString())) {
+            stringList.add(profileData.profileOwnerUuid.toString());
         } else {
             return false;
         }

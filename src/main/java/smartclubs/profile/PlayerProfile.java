@@ -1,21 +1,19 @@
 package smartclubs.profile;
 
-import org.bukkit.OfflinePlayer;
-
 import java.util.Objects;
+import java.util.UUID;
 
 public class PlayerProfile {
-    protected OfflinePlayer profileOwner;
+    protected UUID profileOwnerUuid;
 
-    public PlayerProfile(OfflinePlayer offlinePlayer) {
-        this.profileOwner = offlinePlayer;
-        System.out.println("Created profile for player " + offlinePlayer.getName());
-        System.out.println("Created profile for player " + offlinePlayer.getName());
+    public PlayerProfile(UUID profileOwnerUuid) {
+        this.profileOwnerUuid = profileOwnerUuid;
+        System.out.println("Created profile for player " + profileOwnerUuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(profileOwner.getUniqueId().hashCode());
+        return Objects.hash(profileOwnerUuid.hashCode());
     }
 
     @Override
@@ -27,6 +25,6 @@ public class PlayerProfile {
             return false;
         }
         PlayerProfile otherProfile = (PlayerProfile) obj;
-        return Objects.equals(profileOwner.getUniqueId(), otherProfile.profileOwner.getUniqueId());
+        return Objects.equals(profileOwnerUuid, otherProfile.profileOwnerUuid);
     }
 }

@@ -20,8 +20,8 @@ public class CacheLoader {
         this.dm = dm;
     }
 
-    private void initializeDataFromLocalStorage() {
-//        initializeProfiles();
+    private void writeCacheFromLocalStorage() {
+        cacheProfiles();
 //        initializeGroupTypes();
 //        initializeGroups();
 //
@@ -29,11 +29,11 @@ public class CacheLoader {
 //        linkGroupsToProfiles();
     }
 
-//    private void initializeProfiles() {
-//        List<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
-//        profiles.addAll(ldm.profileData.getProfiles());
-//        for (PlayerProfile profile : profiles) {
-//            pm.registerProfile(profile);
-//        }
-//    }
+    private void cacheProfiles() {
+        List<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
+        profiles.addAll(dm.getPlayerProfiles());
+        for (PlayerProfile profile : profiles) {
+            pm.registerProfileToCache(profile);
+        }
+    }
 }

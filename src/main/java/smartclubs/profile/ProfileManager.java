@@ -35,11 +35,11 @@ public class ProfileManager {
     }
 
     public PlayerProfile generateProfile(OfflinePlayer player) {
-        return new PlayerProfile(player);
+        return new PlayerProfile(player.getUniqueId());
     }
 
     public void registerProfileToCache(PlayerProfile profile) {
-        this.profiles.put(profile.profileOwner.getUniqueId(), profile);
+        this.profiles.put(profile.profileOwnerUuid, profile);
     }
 
     public PlayerProfile getPlayerProfileFromCache(OfflinePlayer player) {

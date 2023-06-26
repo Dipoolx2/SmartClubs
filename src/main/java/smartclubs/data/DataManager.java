@@ -9,6 +9,8 @@ import smartclubs.group.management.Group;
 import smartclubs.group.management.GroupType;
 import smartclubs.profile.PlayerProfile;
 
+import java.util.List;
+
 public class DataManager {
     private SmartClubs pl;
 
@@ -24,7 +26,7 @@ public class DataManager {
         }
         if (USE_LOCAL_DATA) {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                this.addProfileToData(new PlayerProfile(player));
+                this.addProfileToData(new PlayerProfile(player.getUniqueId()));
             }
         }
     }
@@ -71,6 +73,13 @@ public class DataManager {
         }
     }
 
+    public boolean addGroupToProfileData(PlayerProfile profile, Group group) {
+        if (USE_LOCAL_DATA) {
+            return localDataManager.profileData.writeGroupToProfile(profile, group);
+        }
+        return false;
+    }
+
     public PlayerProfile getPlayerProfile(OfflinePlayer player) {
         if (pl.profileManager.getPlayerProfileFromCache(player) != null) {
             return pl.profileManager.getPlayerProfileFromCache(player);
@@ -81,11 +90,12 @@ public class DataManager {
         return null;
     }
 
-    public boolean addGroupToProfileData(PlayerProfile profile, Group group) {
+    public List<PlayerProfile> getPlayerProfiles() {
         if (USE_LOCAL_DATA) {
-            return localDataManager.profileData.writeGroupToProfile(profile, group);
+            return localDataManager.profileData.getPlayerProfiles();
         }
-        return false;
+        return null;
     }
+
 
 }

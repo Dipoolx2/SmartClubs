@@ -5,9 +5,9 @@ import org.bukkit.OfflinePlayer;
 import java.util.UUID;
 
 public class ProfileData {
-    public final OfflinePlayer profileOwner;
+    public final UUID profileOwnerUuid;
 
     public ProfileData(PlayerProfile playerProfile) {
-        this.profileOwner = playerProfile.profileOwner;
+        this.profileOwnerUuid = playerProfile.profileOwnerUuid;
     }
 }
