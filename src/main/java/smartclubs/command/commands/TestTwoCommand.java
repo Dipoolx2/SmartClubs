@@ -1,4 +1,4 @@
-package smartclubs.command.impl;
+package smartclubs.command.commands;
 
 import smartclubs.SmartClubs;
 import smartclubs.command.management.PluginCommand;

@@ -1,4 +1,4 @@
-package smartclubs.command.impl.grouptype;
+package smartclubs.command.commands.grouptype;
 
 import smartclubs.SmartClubs;
 import smartclubs.command.management.BaseCommand;
@@ -30,7 +30,7 @@ public class TypeCreate extends BaseCommand {
 
         GroupType newGroupType = new GroupType(groupTypeName);
         gm.addGroupType(newGroupType);
-
+        SmartClubs.INSTANCE.localDataManager.groupTypesData.writeGroupType(newGroupType);
         sender.sendMessage(ChatColor.GREEN + "Group type " + ChatColor.YELLOW + groupTypeName + ChatColor.GREEN + " has been successfully created.");
     }
 

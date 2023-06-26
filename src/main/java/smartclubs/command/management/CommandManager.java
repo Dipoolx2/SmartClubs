@@ -1,11 +1,11 @@
 package smartclubs.command.management;
 
 import smartclubs.SmartClubs;
-import smartclubs.command.impl.TestCommand;
-import smartclubs.command.impl.TestTwoCommand;
-import smartclubs.command.impl.group.GroupCreate;
-import smartclubs.command.impl.group.GroupJoin;
-import smartclubs.command.impl.grouptype.TypeCreate;
+import smartclubs.command.commands.TestCommand;
+import smartclubs.command.commands.TestTwoCommand;
+import smartclubs.command.commands.group.GroupCreate;
+import smartclubs.command.commands.group.GroupJoin;
+import smartclubs.command.commands.grouptype.TypeCreate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -79,7 +79,7 @@ public class CommandManager implements CommandExecutor {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            commandSender.sendMessage("&cImproper usage of command (" + base.syntax + ").");
+            commandSender.sendMessage(ChatColor.RED + "Improper usage of command (" + base.syntax + ").");
         }
 
         return false;

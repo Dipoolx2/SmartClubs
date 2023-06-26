@@ -8,7 +8,7 @@ import java.util.HashSet;
 
 public class GroupManager {
     private SmartClubs pl;
-    public HashMap<GroupType, HashSet<Group>> groups;
+    private HashMap<GroupType, HashSet<Group>> groups;
     private HashSet<GroupType> groupTypes;
 
     public GroupManager(SmartClubs plugin) {
@@ -44,6 +44,16 @@ public class GroupManager {
         return false;
     }
 
+    public boolean isGroupNameTaken(GroupType groupType, String groupName) {
+        if (!groups.containsKey(groupType)) {
+            return false;
+        }
+        for (Group group : groups.get(groupType)) {
+            if (group.compareName(groupName)) return true;
+        }
+        return false;
+    }
+
     // Case sensitive
     private Group getGroupFromName(String groupName, GroupType groupType) {
         if (!groups.containsKey(groupType)) {
@@ -62,8 +72,7 @@ public class GroupManager {
         return null;
     }
 
-    public boolean addProfileToGroup(String groupName, GroupType groupType, PlayerProfile profile) {
-        Group groupToJoin = getGroupFromName(groupName, groupType);
+    private boolean addUserToGroupInRam(Group groupToJoin, PlayerProfile profile) {
         if (groupToJoin == null) {
             pl.getLogger().severe("Couldn't add player to group: Group doesn't exist.");
             return false;
@@ -76,8 +85,18 @@ public class GroupManager {
             pl.getLogger().severe("Couldn't add player to group: Group doesn't exist.");
             return false;
         }
+        if (groupToJoin.members.contains(profile)) {
+            return false;
+        }
         groupToJoin.addProfileToGroup(profile);
         return true;
+    }
+
+    public boolean addProfileToGroup(String groupName, GroupType groupType, PlayerProfile profile) {
+        Group groupToJoin = getGroupFromName(groupName, groupType);
+        if (!addUserToGroupInRam(groupToJoin, profile)) return false;
+        return !(!SmartClubs.INSTANCE.localDataManager.profileData.writeGroupToProfile(profile, groupToJoin) ||
+                !SmartClubs.INSTANCE.localDataManager.groupsData.writeProfileToGroupMembers(groupToJoin, profile));
     }
 
 }

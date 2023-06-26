@@ -6,13 +6,15 @@ import smartclubs.data.local.manager.GroupTypeDataManager;
 import smartclubs.data.local.manager.ProfileDataManager;
 
 public class LocalDataManager {
-    public GroupDataManager groupData;
-    public GroupTypeDataManager groupTypeData;
+    private JavaPlugin pl;
     public ProfileDataManager profileData;
+    public GroupDataManager groupsData;
+    public GroupTypeDataManager groupTypesData;
 
     public LocalDataManager(JavaPlugin pl) {
-        this.groupData = new GroupDataManager(pl);
-        this.groupTypeData = new GroupTypeDataManager(pl);
+        this.pl = pl;
+        this.groupTypesData = new GroupTypeDataManager(pl);
+        this.groupsData = new GroupDataManager(pl);
         this.profileData = new ProfileDataManager(pl);
     }
 }
