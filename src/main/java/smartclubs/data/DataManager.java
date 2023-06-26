@@ -1,6 +1,8 @@
 package smartclubs.data;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import smartclubs.SmartClubs;
 import smartclubs.data.local.LocalDataManager;
 import smartclubs.group.management.Group;
@@ -19,6 +21,11 @@ public class DataManager {
         this.USE_LOCAL_DATA = useLocalData;
         if (USE_LOCAL_DATA) {
             this.localDataManager = new LocalDataManager(pl);
+        }
+        if (USE_LOCAL_DATA) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                this.addProfileToData(new PlayerProfile(player));
+            }
         }
     }
 
