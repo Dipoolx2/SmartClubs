@@ -9,18 +9,18 @@ import java.util.UUID;
 public class Group {
     protected final UUID uniqueId;
     protected String groupName;
-    protected HashSet<PlayerProfile> members;
-    protected GroupType groupType;
+    protected HashSet<UUID> members;
+    protected UUID groupType;
 
-    public Group(String groupName, GroupType groupType) {
+    public Group(String groupName, UUID groupType) {
         this.groupName = groupName;
         this.groupType = groupType;
         this.uniqueId = UUID.randomUUID();
         this.members = new HashSet<>();
     }
 
-    protected void addProfileToGroup(PlayerProfile profile) {
-        members.add(profile);
+    protected void addProfileToGroup(UUID profileUuid) {
+        members.add(profileUuid);
     }
 
     protected boolean compareName(String supposedName) {

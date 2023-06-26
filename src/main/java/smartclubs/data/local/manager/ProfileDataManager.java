@@ -46,7 +46,7 @@ public class ProfileDataManager {
     public boolean writeGroupToProfile(PlayerProfile profile, Group group) {
         ProfileData profileData = new ProfileData(profile);
         GroupData groupData = new GroupData(group);
-        String listPath = profileData.profileOwnerUuid.toString()+".groups."+groupData.groupType.uniqueId;
+        String listPath = profileData.profileOwnerUuid.toString()+".groups."+groupData.groupTypeUuid.toString();
 
         if (!profilesData.contains(profileData.profileOwnerUuid.toString())) {
             pl.getLogger().severe("Can't add group to profile in local data: Profile " + profileData.profileOwnerUuid.toString() +" isn't in local data.");

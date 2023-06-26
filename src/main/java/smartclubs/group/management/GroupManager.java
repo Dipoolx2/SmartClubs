@@ -2,13 +2,15 @@ package smartclubs.group.management;
 
 import smartclubs.SmartClubs;
 import smartclubs.profile.PlayerProfile;
+import smartclubs.profile.ProfileData;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class GroupManager {
     private SmartClubs pl;
-    private HashMap<GroupType, HashSet<Group>> groups;
+    private HashMap<UUID, HashSet<Group>> groups; // Key = group type uuid
     private HashSet<GroupType> groupTypes;
 
     public GroupManager(SmartClubs plugin) {
@@ -45,10 +47,11 @@ public class GroupManager {
     }
 
     public boolean isGroupNameTakenInCache(GroupType groupType, String groupName) {
-        if (!groups.containsKey(groupType)) {
+        GroupTypeData groupTypeData = new GroupTypeData(groupType);
+        if (!groups.containsKey(groupTypeData.uniqueId)) {
             return false;
         }
-        for (Group group : groups.get(groupType)) {
+        for (Group group : groups.get(groupTypeData.uniqueId)) {
             if (group.compareName(groupName)) return true;
         }
         return false;
@@ -56,7 +59,8 @@ public class GroupManager {
 
     // Case sensitive
     private Group getGroupFromName(String groupName, GroupType groupType) {
-        if (!groups.containsKey(groupType)) {
+        GroupTypeData groupTypeData = new GroupTypeData(groupType);
+        if (!groups.containsKey(groupTypeData.uniqueId)) {
             pl.getLogger().severe("Couldn't get group from name: There is no group with type " + groupType.groupTypeName + ".");
             return null;
         }
@@ -64,7 +68,7 @@ public class GroupManager {
             pl.getLogger().severe("Couldn't get group from name: Group name is empty.");
             return null;
         }
-        for (Group g : groups.get(groupType)) {
+        for (Group g : groups.get(groupTypeData.uniqueId)) {
             if (g.compareName(groupName)) {
                 return g;
             }
@@ -73,6 +77,7 @@ public class GroupManager {
     }
 
     private boolean addUserToGroupInRam(Group groupToJoin, PlayerProfile profile) {
+        ProfileData profileData = new ProfileData(profile);
         if (groupToJoin == null) {
             pl.getLogger().severe("Couldn't add player to group: Group doesn't exist.");
             return false;
@@ -85,10 +90,10 @@ public class GroupManager {
             pl.getLogger().severe("Couldn't add player to group: Group doesn't exist.");
             return false;
         }
-        if (groupToJoin.members.contains(profile)) {
+        if (groupToJoin.members.contains(profileData.profileOwnerUuid)) {
             return false;
         }
-        groupToJoin.addProfileToGroup(profile);
+        groupToJoin.addProfileToGroup(profileData.profileOwnerUuid);
         return true;
     }
 

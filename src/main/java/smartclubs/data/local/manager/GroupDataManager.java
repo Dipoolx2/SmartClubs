@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class GroupDataManager {
     private JavaPlugin pl;
@@ -26,10 +27,9 @@ public class GroupDataManager {
 
     public void writeGroup(Group group) {
         GroupData groupData = new GroupData(group);
-        this.groupsData.set(groupData.groupType.uniqueId+"."+ groupData.uniqueId +".name", groupData.groupName);
-        List<String> membersList = new ArrayList<>();
-        groupData.members.forEach(m -> membersList.add(m.profileOwnerUuid.toString()));
-        this.groupsData.set(groupData.groupType.uniqueId+"."+ groupData.uniqueId +".members", membersList);
+        this.groupsData.set(groupData.groupTypeUuid+"."+ groupData.uniqueId +".name", groupData.groupName);
+        List<UUID> membersList = new ArrayList<>(groupData.members);
+        this.groupsData.set(groupData.groupTypeUuid+"."+ groupData.uniqueId +".members", membersList);
 
         try {
             this.groupsData.save(groupsFile);
@@ -41,8 +41,8 @@ public class GroupDataManager {
     public boolean writeProfileToGroupMembers(Group group, PlayerProfile profile) {
         GroupData groupData = new GroupData(group);
         ProfileData profileData = new ProfileData(profile);
-        String listPath = groupData.groupType.uniqueId.toString()+"."+groupData.uniqueId.toString()+".members";
-        if (!groupsData.contains(groupData.groupType.uniqueId.toString()+"."+groupData.uniqueId)) {
+        String listPath = groupData.groupTypeUuid.toString()+"."+groupData.uniqueId.toString()+".members";
+        if (!groupsData.contains(groupData.groupTypeUuid.toString()+"."+groupData.uniqueId)) {
             pl.getLogger().severe("Couldn't add profile to group members in local storage: Group " + groupData.uniqueId.toString() + " does not exist.");
             return false;
         }

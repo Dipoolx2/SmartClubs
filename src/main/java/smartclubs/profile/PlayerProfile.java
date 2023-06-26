@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerProfile {
-    protected UUID profileOwnerUuid;
+    public UUID profileOwnerUuid;
 
     public PlayerProfile(UUID profileOwnerUuid) {
         this.profileOwnerUuid = profileOwnerUuid;

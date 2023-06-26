@@ -8,6 +8,7 @@ import smartclubs.group.management.GroupManager;
 import smartclubs.group.management.GroupType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import smartclubs.group.management.GroupTypeData;
 
 public class GroupCreate extends BaseCommand {
     public GroupCreate() {
@@ -32,7 +33,7 @@ public class GroupCreate extends BaseCommand {
         String[] argsWithoutType = shortenArray(args, typeName.count);
         String groupName = String.join(" ", argsWithoutType);
 
-        Group newGroup = new Group(groupName, groupType);
+        Group newGroup = new Group(groupName, new GroupTypeData(groupType).uniqueId);
         if (dm.isGroupNameTaken(groupType, groupName)) {
             sender.sendMessage(ChatColor.RED + "Group of type " + ChatColor.YELLOW + typeName.str + ChatColor.RED + " already exists with name " + ChatColor.YELLOW + groupName + ChatColor.RED + ".");
             return;
