@@ -2,8 +2,11 @@ package smartclubs.data.local.manager;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import smartclubs.group.management.GroupType;
+import smartclubs.group.management.GroupTypeData;
 
 import java.io.File;
+import java.io.IOException;
 
 public class GroupTypeDataManager {
     private JavaPlugin pl;
@@ -16,6 +19,17 @@ public class GroupTypeDataManager {
         this.pl = pl;
         if (createGroupTypesFile())
             initializeGroupTypesFile();
+    }
+
+    public void writeGroupType(GroupType groupType) {
+        GroupTypeData groupTypeData = new GroupTypeData(groupType);
+        this.groupTypesData.set(groupTypeData.uniqueId+".name", groupTypeData.groupTypeName);
+
+        try {
+            this.groupTypesData.save(groupTypesFile);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public boolean createGroupTypesFile() {

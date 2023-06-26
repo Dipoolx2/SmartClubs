@@ -20,19 +20,19 @@ public class CacheLoader {
     }
 
     private void initializeDataFromLocalStorage() {
-        initializeProfiles();
-        initializeGroupTypes();
-        initializeGroups();
-
-        linkProfilesToGroups();
-        linkGroupsToProfiles();
+//        initializeProfiles();
+//        initializeGroupTypes();
+//        initializeGroups();
+//
+//        linkProfilesToGroups();
+//        linkGroupsToProfiles();
     }
 
-    private void initializeProfiles() {
-        List<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
-        profiles.addAll(ldm.profileData.getProfiles());
-        for (PlayerProfile profile : profiles) {
-            pm.registerProfile(profile);
-        }
-    }
+//    private void initializeProfiles() {
+//        List<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
+//        profiles.addAll(ldm.profileData.getProfiles());
+//        for (PlayerProfile profile : profiles) {
+//            pm.registerProfile(profile);
+//        }
+//    }
 }
