@@ -28,7 +28,7 @@ public class GroupDataManager {
         GroupData groupData = new GroupData(group);
         this.groupsData.set(groupData.groupType.uniqueId+"."+ groupData.uniqueId +".name", groupData.groupName);
         List<String> membersList = new ArrayList<>();
-        groupData.members.forEach(m -> membersList.add(m.uniqueId.toString()));
+        groupData.members.forEach(m -> membersList.add(m.profileOwner.getUniqueId().toString()));
         this.groupsData.set(groupData.groupType.uniqueId+"."+ groupData.uniqueId +".members", membersList);
 
         try {
@@ -50,8 +50,8 @@ public class GroupDataManager {
             groupsData.set(listPath, new ArrayList<String>());
         }
         List<String> stringList = groupsData.getStringList(listPath);
-        if (!stringList.contains(profileData.uniqueId.toString())) {
-            stringList.add(profileData.uniqueId.toString());
+        if (!stringList.contains(profileData.profileOwner.getUniqueId().toString())) {
+            stringList.add(profileData.profileOwner.getUniqueId().toString());
         } else {
             return false;
         }
@@ -64,7 +64,7 @@ public class GroupDataManager {
         return true;
     }
 
-    public boolean createGroupsFile() {
+    private boolean createGroupsFile() {
         File dataFolder = new File(pl.getDataFolder(), "data");
         if (!dataFolder.exists()) {
             if (!dataFolder.mkdirs()) {
@@ -76,17 +76,17 @@ public class GroupDataManager {
         this.groupsFile = new File(dataFolder, "groups.yml");
         if (!this.groupsFile.exists()) {
             pl.saveResource("data/groups.yml", false);
-            this.groupsData = new YamlConfiguration();
-            try {
-                this.groupsData.load(groupsFile);
-            } catch (Exception e) {
-                pl.getLogger().severe("Something went wrong while initializing groups.yml.");
-            }
+        }
+        this.groupsData = new YamlConfiguration();
+        try {
+            this.groupsData.load(groupsFile);
+        } catch (Exception e) {
+            pl.getLogger().severe("Something went wrong while initializing groups.yml.");
         }
         return true;
     }
 
-    public void initializeGroupsFile() {
+    private void initializeGroupsFile() {
         if (groupsData == null) {
             pl.getLogger().severe("Couldn't initialize groups file: Expected file groups.yml does not exist in plugin directory.");
             return;

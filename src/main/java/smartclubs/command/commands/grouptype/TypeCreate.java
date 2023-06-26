@@ -2,6 +2,7 @@ package smartclubs.command.commands.grouptype;
 
 import smartclubs.SmartClubs;
 import smartclubs.command.management.BaseCommand;
+import smartclubs.data.DataManager;
 import smartclubs.group.management.GroupManager;
 import smartclubs.group.management.GroupType;
 import org.bukkit.ChatColor;
@@ -16,6 +17,7 @@ public class TypeCreate extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         GroupManager gm = SmartClubs.INSTANCE.groupManager;
+        DataManager dm = SmartClubs.INSTANCE.dataManager;
         if (args.length < 1) {
             sender.sendMessage(ChatColor.RED + "Improper usage of command (" + syntax + ").");
             return;
@@ -23,14 +25,14 @@ public class TypeCreate extends BaseCommand {
 
         String groupTypeName = concatenateArgs(args);
 
-        if (gm.isGroupTypeNameTaken(groupTypeName)) {
+        if (dm.isGroupTypeNameTaken(groupTypeName)) {
             sender.sendMessage(ChatColor.RED + "Group type with name " + ChatColor.YELLOW + groupTypeName + ChatColor.RED + " already exists.");
             return;
         }
 
         GroupType newGroupType = new GroupType(groupTypeName);
         gm.addGroupType(newGroupType);
-        SmartClubs.INSTANCE.localDataManager.groupTypesData.writeGroupType(newGroupType);
+        SmartClubs.INSTANCE.dataManager.addGroupTypeToData(newGroupType);
         sender.sendMessage(ChatColor.GREEN + "Group type " + ChatColor.YELLOW + groupTypeName + ChatColor.GREEN + " has been successfully created.");
     }
 

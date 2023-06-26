@@ -2,10 +2,10 @@ package smartclubs.command.commands.group;
 
 import smartclubs.SmartClubs;
 import smartclubs.command.management.BaseCommand;
+import smartclubs.data.DataManager;
 import smartclubs.group.management.GroupManager;
 import smartclubs.group.management.GroupType;
 import smartclubs.profile.PlayerProfile;
-import smartclubs.profile.ProfileManager;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -27,7 +27,7 @@ public class GroupJoin extends BaseCommand {
         }
 
         GroupManager gm = SmartClubs.INSTANCE.groupManager;
-        ProfileManager pm = SmartClubs.INSTANCE.profileManager;
+        DataManager dm = SmartClubs.INSTANCE.dataManager;
 
         if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Improper usage of command (" + syntax + ").");
@@ -43,8 +43,7 @@ public class GroupJoin extends BaseCommand {
         }
 
         String groupName = String.join(" ", shortenArray(args, typeName.count));
-        PlayerProfile profile = pm.getPlayerProfile((OfflinePlayer) sender);
-
+        PlayerProfile profile = dm.getPlayerProfile((OfflinePlayer) sender);
         if (gm.addProfileToGroup(groupName, groupType, profile)) {
             sender.sendMessage(ChatColor.GREEN + "Joined " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN +
                     " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + "!");

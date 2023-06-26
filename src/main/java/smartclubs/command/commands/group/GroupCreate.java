@@ -2,6 +2,7 @@ package smartclubs.command.commands.group;
 
 import smartclubs.SmartClubs;
 import smartclubs.command.management.BaseCommand;
+import smartclubs.data.DataManager;
 import smartclubs.group.management.Group;
 import smartclubs.group.management.GroupManager;
 import smartclubs.group.management.GroupType;
@@ -17,6 +18,7 @@ public class GroupCreate extends BaseCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         GroupManager gm = SmartClubs.INSTANCE.groupManager;
+        DataManager dm = SmartClubs.INSTANCE.dataManager;
         if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Improper usage of command (" + syntax + ").");
             return;
@@ -31,12 +33,12 @@ public class GroupCreate extends BaseCommand {
         String groupName = String.join(" ", argsWithoutType);
 
         Group newGroup = new Group(groupName, groupType);
-        if (gm.isGroupNameTaken(groupType, groupName)) {
+        if (dm.isGroupNameTaken(groupType, groupName)) {
             sender.sendMessage(ChatColor.RED + "Group of type " + ChatColor.YELLOW + typeName.str + ChatColor.RED + " already exists with name " + ChatColor.YELLOW + groupName + ChatColor.RED + ".");
             return;
         }
         gm.addGroup(newGroup);
-        SmartClubs.INSTANCE.localDataManager.groupsData.writeGroup(newGroup);
+        dm.addGroupToData(newGroup);
         sender.sendMessage(ChatColor.GREEN + "Created a new " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + ".");
     }
 

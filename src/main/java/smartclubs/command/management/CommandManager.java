@@ -82,7 +82,7 @@ public class CommandManager implements CommandExecutor {
             commandSender.sendMessage(ChatColor.RED + "Improper usage of command (" + base.syntax + ").");
         }
 
-        return false;
+        return true;
     }
 
     private PluginCommand findSubCommand(PluginCommand base, String[] args) {

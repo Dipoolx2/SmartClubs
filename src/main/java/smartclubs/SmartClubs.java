@@ -1,22 +1,24 @@
 package smartclubs;
 
-import org.bukkit.OfflinePlayer;
 import smartclubs.command.management.CommandManager;
+import smartclubs.data.DataManager;
 import smartclubs.data.local.CacheLoader;
-import smartclubs.data.local.LocalDataManager;
 import smartclubs.group.management.GroupManager;
-import smartclubs.profile.PlayerProfile;
 import smartclubs.profile.ProfileManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SmartClubs extends JavaPlugin {
     public static SmartClubs INSTANCE = null;
     public static String PERM_BASE = "smartclubs";
+
     private CommandManager commandManager;
+    private CacheLoader cacheLoader;
     public GroupManager groupManager;
     public ProfileManager profileManager;
-    public LocalDataManager localDataManager;
-    private CacheLoader cacheLoader;
+    public DataManager dataManager;
+
+    public final boolean SINGLE_SERVER_MODE = true;
+
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -27,28 +29,14 @@ public final class SmartClubs extends JavaPlugin {
         this.getLogger().info("Initializing Profile Manager");
         this.profileManager = new ProfileManager(this);
 
-        this.getLogger().info("Initializing Local Data Manager");
-        this.localDataManager = new LocalDataManager(this);
-        this.cacheLoader = new CacheLoader(localDataManager, profileManager, groupManager);
+        this.getLogger().info("Initializing Data Manager");
+        this.dataManager = new DataManager(this, true);
+        this.cacheLoader = new CacheLoader(dataManager, profileManager, groupManager);
 
-        this.getLogger().info("Initializing profiles, group types and groups.");
+        this.getLogger().info("Pre-filling cache");
 
         //initializeDataFromLocalStorage();
-
-        initializeUncreatedProfiles();
         this.getLogger().info("Enabled SmartClubs");
-    }
-
-    // TODO: RESOLVE CONFLICTS
-
-    public void initializeUncreatedProfiles() {
-        for (OfflinePlayer offlinePlayer : this.getServer().getOfflinePlayers()) {
-            if (profileManager.getPlayerProfile(offlinePlayer) == null) {
-                PlayerProfile newProfile = profileManager.generateProfile(offlinePlayer);
-                profileManager.registerProfile(newProfile);
-                localDataManager.profileData.writeProfile(newProfile);
-            }
-        }
     }
 
     @Override

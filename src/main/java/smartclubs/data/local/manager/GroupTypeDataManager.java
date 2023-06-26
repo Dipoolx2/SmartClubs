@@ -32,7 +32,7 @@ public class GroupTypeDataManager {
         }
     }
 
-    public boolean createGroupTypesFile() {
+    private boolean createGroupTypesFile() {
         File dataFolder = new File(pl.getDataFolder(), "data");
         if (!dataFolder.exists()) {
             if (!dataFolder.mkdirs()) {
@@ -44,17 +44,17 @@ public class GroupTypeDataManager {
         this.groupTypesFile = new File(dataFolder, "group-types.yml");
         if (!this.groupTypesFile.exists()) {
             pl.saveResource("data/group-types.yml", false);
-            this.groupTypesData = new YamlConfiguration();
-            try {
-                this.groupTypesData.load(groupTypesFile);
-            } catch (Exception e) {
-                pl.getLogger().severe("Something went wrong while initializing group-types.yml.");
-            }
+        }
+        this.groupTypesData = new YamlConfiguration();
+        try {
+            this.groupTypesData.load(groupTypesFile);
+        } catch (Exception e) {
+            pl.getLogger().severe("Something went wrong while initializing group-types.yml.");
         }
         return true;
     }
 
-    public void initializeGroupTypesFile() {
+    private void initializeGroupTypesFile() {
         if (groupTypesData == null) {
             pl.getLogger().severe("Couldn't initialize group types file: Expected file group-types.yml does not exist in plugin directory.");
             return;

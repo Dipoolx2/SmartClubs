@@ -7,40 +7,42 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class ProfileManager {
     private SmartClubs pl;
-    private final HashSet<PlayerProfile> profiles;
+    private final HashMap<UUID, PlayerProfile> profiles;
     public ProfileManager(SmartClubs pl) {
-        this.profiles = new HashSet<>();
+        this.profiles = new HashMap<>();
         this.pl = pl;
 
         Bukkit.getPluginManager().registerEvents(new Listener() {
             @EventHandler
             public void onPlayerJoin(PlayerJoinEvent event) {
-                if(getPlayerProfile(event.getPlayer()) != null) return;
+                if (getPlayerProfileFromCache(event.getPlayer()) != null) return;
+                if (!pl.SINGLE_SERVER_MODE) {
+                    if (pl.dataManager.getPlayerProfile(event.getPlayer()) != null) {
+                        registerProfileToCache(pl.dataManager.getPlayerProfile(event.getPlayer()));
+                        return;
+                    }
+                }
                 PlayerProfile newProfile = generateProfile(event.getPlayer());
-                registerProfile(newProfile);
-                SmartClubs.INSTANCE.localDataManager.profileData.writeProfile(newProfile);
+                registerProfileToCache(newProfile);
+                pl.dataManager.addProfileToData(newProfile);
             }
-        }, SmartClubs.INSTANCE);
+        }, pl);
     }
 
     public PlayerProfile generateProfile(OfflinePlayer player) {
         return new PlayerProfile(player);
     }
 
-    public void registerProfile(PlayerProfile profile) {
-        this.profiles.add(profile);
+    public void registerProfileToCache(PlayerProfile profile) {
+        this.profiles.put(profile.profileOwner.getUniqueId(), profile);
     }
 
-    public PlayerProfile getPlayerProfile(OfflinePlayer player) {
-        for (PlayerProfile profile : profiles) {
-            if (profile.profileOwner.getUniqueId().equals(player.getUniqueId())) {
-                return profile;
-            }
-        }
-        return null;
+    public PlayerProfile getPlayerProfileFromCache(OfflinePlayer player) {
+        return profiles.get(player.getUniqueId());
     }
 }

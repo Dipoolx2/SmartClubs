@@ -37,14 +37,14 @@ public class GroupManager {
         this.groupTypes.add(groupType);
     }
 
-    public boolean isGroupTypeNameTaken(String groupTypeName) {
+    public boolean isGroupTypeNameTakenInCache(String groupTypeName) {
         for (GroupType type : groupTypes) {
             if (type.groupTypeName.equalsIgnoreCase(groupTypeName)) return true;
         }
         return false;
     }
 
-    public boolean isGroupNameTaken(GroupType groupType, String groupName) {
+    public boolean isGroupNameTakenInCache(GroupType groupType, String groupName) {
         if (!groups.containsKey(groupType)) {
             return false;
         }
@@ -95,8 +95,8 @@ public class GroupManager {
     public boolean addProfileToGroup(String groupName, GroupType groupType, PlayerProfile profile) {
         Group groupToJoin = getGroupFromName(groupName, groupType);
         if (!addUserToGroupInRam(groupToJoin, profile)) return false;
-        return !(!SmartClubs.INSTANCE.localDataManager.profileData.writeGroupToProfile(profile, groupToJoin) ||
-                !SmartClubs.INSTANCE.localDataManager.groupsData.writeProfileToGroupMembers(groupToJoin, profile));
+        return !(!SmartClubs.INSTANCE.dataManager.addGroupToProfileData(profile, groupToJoin) ||
+                !SmartClubs.INSTANCE.dataManager.addProfileToGroupMembersData(groupToJoin, profile));
     }
 
 }

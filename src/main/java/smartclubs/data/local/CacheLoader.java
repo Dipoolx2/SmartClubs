@@ -1,5 +1,6 @@
 package smartclubs.data.local;
 
+import smartclubs.data.DataManager;
 import smartclubs.group.management.GroupManager;
 import smartclubs.profile.PlayerProfile;
 import smartclubs.profile.ProfileManager;
@@ -11,12 +12,12 @@ public class CacheLoader {
 
     private ProfileManager pm;
     private GroupManager gm;
-    private LocalDataManager ldm;
+    private DataManager dm;
 
-    public CacheLoader(LocalDataManager ldm, ProfileManager pm, GroupManager gm) {
+    public CacheLoader(DataManager dm, ProfileManager pm, GroupManager gm) {
         this.pm = pm;
         this.gm = gm;
-        this.ldm = ldm;
+        this.dm = dm;
     }
 
     private void initializeDataFromLocalStorage() {

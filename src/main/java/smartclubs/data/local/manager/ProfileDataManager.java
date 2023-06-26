@@ -1,5 +1,6 @@
 package smartclubs.data.local.manager;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import smartclubs.group.management.Group;
@@ -9,10 +10,7 @@ import smartclubs.profile.ProfileData;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ProfileDataManager {
     private JavaPlugin pl;
@@ -26,13 +24,23 @@ public class ProfileDataManager {
             initializeProfilesFile();
     }
 
+    public PlayerProfile getPlayerProfile(UUID playerUuid) {
+        if (pl.getServer().getOfflinePlayer(playerUuid).getFirstPlayed() == 0) {
+            return null;
+        }
+        if (profilesData.isConfigurationSection(playerUuid.toString())) {
+            return new PlayerProfile(Bukkit.getOfflinePlayer(playerUuid));
+        }
+        return null;
+    }
+
     public boolean writeGroupToProfile(PlayerProfile profile, Group group) {
         ProfileData profileData = new ProfileData(profile);
         GroupData groupData = new GroupData(group);
-        String listPath = profileData.uniqueId.toString()+".groups."+groupData.groupType.uniqueId;
+        String listPath = profileData.profileOwner.getUniqueId().toString()+".groups."+groupData.groupType.uniqueId;
 
-        if (!profilesData.contains(profileData.uniqueId.toString())) {
-            pl.getLogger().severe("Can't add group to profile in local data: Profile " + profileData.uniqueId.toString() +" isn't in local data.");
+        if (!profilesData.contains(profileData.profileOwner.getUniqueId().toString())) {
+            pl.getLogger().severe("Can't add group to profile in local data: Profile " + profileData.profileOwner.getUniqueId().toString() +" isn't in local data.");
             return false;
         }
         if (!profilesData.contains(listPath)) {
@@ -56,7 +64,7 @@ public class ProfileDataManager {
 
     public void writeProfile(PlayerProfile profile) {
         ProfileData profileData = new ProfileData(profile);
-        profilesData.set(profileData.uniqueId.toString()+".profile-owner", profileData.profileOwner.getUniqueId().toString());
+        profilesData.set(profileData.profileOwner.getUniqueId().toString()+".profile-owner", profileData.profileOwner.getUniqueId().toString());
         try {
             profilesData.save(profilesFile);
         } catch (IOException ex) {
@@ -64,7 +72,7 @@ public class ProfileDataManager {
         }
     }
 
-    public boolean createProfilesFile() {
+    private boolean createProfilesFile() {
         File dataFolder = new File(pl.getDataFolder(), "data");
         if (!dataFolder.exists()) {
             if (!dataFolder.mkdirs()) {
@@ -76,17 +84,17 @@ public class ProfileDataManager {
         this.profilesFile = new File(dataFolder, "profiles.yml");
         if (!this.profilesFile.exists()) {
             pl.saveResource("data/profiles.yml", false);
-            this.profilesData = new YamlConfiguration();
-            try {
-                this.profilesData.load(profilesFile);
-            } catch (Exception e) {
-                pl.getLogger().severe("Something went wrong while initializing profiles.yml.");
-            }
+        }
+        this.profilesData = new YamlConfiguration();
+        try {
+            this.profilesData.load(profilesFile);
+        } catch (Exception e) {
+            pl.getLogger().severe("Something went wrong while initializing profiles.yml.");
         }
         return true;
     }
 
-    public void initializeProfilesFile() {
+    private void initializeProfilesFile() {
         if (profilesData == null) {
             pl.getLogger().severe("Couldn't initialize profiles file: Expected file profiles.yml does not exist in plugin directory.");
             return;
