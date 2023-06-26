@@ -34,7 +34,7 @@ public final class SmartClubs extends JavaPlugin {
         this.cacheLoader = new CacheLoader(dataManager, profileManager, groupManager);
 
         this.getLogger().info("Pre-filling cache");
-
+        this.cacheLoader.writeCacheFromLocalStorage();
         //initializeDataFromLocalStorage();
         this.getLogger().info("Enabled SmartClubs");
     }

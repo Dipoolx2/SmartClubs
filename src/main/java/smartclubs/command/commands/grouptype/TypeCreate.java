@@ -31,7 +31,7 @@ public class TypeCreate extends BaseCommand {
         }
 
         GroupType newGroupType = new GroupType(groupTypeName);
-        gm.addGroupType(newGroupType);
+        gm.registerGroupTypeToCache(newGroupType);
         SmartClubs.INSTANCE.dataManager.addGroupTypeToData(newGroupType);
         sender.sendMessage(ChatColor.GREEN + "Group type " + ChatColor.YELLOW + groupTypeName + ChatColor.GREEN + " has been successfully created.");
     }

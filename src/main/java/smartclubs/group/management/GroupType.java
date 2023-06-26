@@ -12,6 +12,11 @@ public class GroupType {
         this.groupTypeName = groupTypeName;
     }
 
+    public GroupType(UUID uniqueId, String groupTypeName) {
+        this.uniqueId = uniqueId;
+        this.groupTypeName = groupTypeName;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(uniqueId);

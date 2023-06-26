@@ -38,7 +38,7 @@ public class GroupCreate extends BaseCommand {
             sender.sendMessage(ChatColor.RED + "Group of type " + ChatColor.YELLOW + typeName.str + ChatColor.RED + " already exists with name " + ChatColor.YELLOW + groupName + ChatColor.RED + ".");
             return;
         }
-        gm.addGroup(newGroup);
+        gm.registerGroupToCache(newGroup);
         dm.addGroupToData(newGroup);
         sender.sendMessage(ChatColor.GREEN + "Created a new " + ChatColor.YELLOW + typeName.str + ChatColor.GREEN + " named " + ChatColor.YELLOW + groupName + ChatColor.GREEN + ".");
     }

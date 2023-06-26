@@ -7,6 +7,11 @@ import smartclubs.group.management.GroupTypeData;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class GroupTypeDataManager {
     private JavaPlugin pl;
@@ -19,6 +24,15 @@ public class GroupTypeDataManager {
         this.pl = pl;
         if (createGroupTypesFile())
             initializeGroupTypesFile();
+    }
+
+    public List<GroupType> getGroupTypes() {
+        ArrayList<GroupType> result = new ArrayList<>();
+        for (String groupTypeUuid : Objects.requireNonNull(groupTypesData.getConfigurationSection("")).getKeys(false)) {
+            GroupType newType = new GroupType(UUID.fromString(groupTypeUuid), groupTypesData.getString(groupTypeUuid+".name"));
+            result.add(newType);
+        }
+        return result;
     }
 
     public void writeGroupType(GroupType groupType) {

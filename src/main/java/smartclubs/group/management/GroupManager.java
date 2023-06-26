@@ -19,7 +19,7 @@ public class GroupManager {
         this.groupTypes = new HashSet<>();
     }
 
-    public void addGroup(final Group group) {
+    public void registerGroupToCache(final Group group) {
         if (!groups.containsKey(group.groupType)) {
             groups.put(group.groupType, new HashSet<>());
         }
@@ -35,7 +35,7 @@ public class GroupManager {
         return null;
     }
 
-    public void addGroupType(GroupType groupType) {
+    public void registerGroupTypeToCache(GroupType groupType) {
         this.groupTypes.add(groupType);
     }
 

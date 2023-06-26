@@ -10,6 +10,7 @@ import smartclubs.group.management.GroupType;
 import smartclubs.profile.PlayerProfile;
 
 import java.util.List;
+import java.util.UUID;
 
 public class DataManager {
     private SmartClubs pl;
@@ -24,11 +25,12 @@ public class DataManager {
         if (USE_LOCAL_DATA) {
             this.localDataManager = new LocalDataManager(pl);
         }
-        if (USE_LOCAL_DATA) {
-            for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!this.isProfileInData(player.getUniqueId()))
                 this.addProfileToData(new PlayerProfile(player.getUniqueId()));
-            }
+
         }
+
     }
 
     // --- GROUP TYPE DATA ---
@@ -43,6 +45,14 @@ public class DataManager {
             return pl.groupManager.isGroupTypeNameTakenInCache(groupTypeName);
         }
         return false;
+    }
+
+    public List<GroupType> getGroupTypes() {
+        if (USE_LOCAL_DATA) {
+            return localDataManager.groupTypesData.getGroupTypes();
+        }
+
+        return null;
     }
 
     // --- GROUP DATA ---
@@ -97,5 +107,12 @@ public class DataManager {
         return null;
     }
 
+    public boolean isProfileInData(UUID uuid) {
+        if (USE_LOCAL_DATA) {
+            return localDataManager.profileData.getPlayerProfile(uuid) != null;
+        }
+
+        return false;
+    }
 
 }

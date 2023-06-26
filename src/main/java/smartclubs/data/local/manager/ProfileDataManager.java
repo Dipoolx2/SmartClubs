@@ -28,7 +28,7 @@ public class ProfileDataManager {
     public List<PlayerProfile> getPlayerProfiles() {
         List<PlayerProfile> playerProfiles = new ArrayList<>();
         for (String profileUuid : Objects.requireNonNull(profilesData.getConfigurationSection("")).getKeys(false)) {
-            playerProfiles.add(new PlayerProfile(UUID.fromString(profilesData.getString(profileUuid)+".profile-owner")));
+            playerProfiles.add(new PlayerProfile(UUID.fromString(Objects.requireNonNull(profilesData.getString(profileUuid + ".profile-owner")))));
         }
         return playerProfiles;
     }
