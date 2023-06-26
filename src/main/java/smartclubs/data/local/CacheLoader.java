@@ -1,6 +1,7 @@
 package smartclubs.data.local;
 
 import smartclubs.data.DataManager;
+import smartclubs.group.management.Group;
 import smartclubs.group.management.GroupManager;
 import smartclubs.group.management.GroupType;
 import smartclubs.profile.PlayerProfile;
@@ -24,10 +25,7 @@ public class CacheLoader {
     public void writeCacheFromLocalStorage() {
         cacheProfiles();
         cacheGroupTypes();
-//        initializeGroups();
-//
-//        linkProfilesToGroups();
-//        linkGroupsToProfiles();
+        cacheGroups();
     }
 
     private void cacheProfiles() {
@@ -41,6 +39,13 @@ public class CacheLoader {
         List<GroupType> groupTypes = new ArrayList<>(dm.getGroupTypes());
         for (GroupType groupType : groupTypes) {
             gm.registerGroupTypeToCache(groupType);
+        }
+    }
+
+    private void cacheGroups() {
+        List<Group> groups = new ArrayList<>(dm.getGroups());
+        for (Group group : groups) {
+            gm.registerGroupToCache(group);
         }
     }
 }

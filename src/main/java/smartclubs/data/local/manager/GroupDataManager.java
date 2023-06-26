@@ -2,6 +2,7 @@ package smartclubs.data.local.manager;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.A;
 import smartclubs.group.management.Group;
 import smartclubs.group.management.GroupData;
 import smartclubs.profile.PlayerProfile;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class GroupDataManager {
@@ -23,6 +25,20 @@ public class GroupDataManager {
         this.pl = pl;
         if (createGroupsFile())
             initializeGroupsFile();
+    }
+
+    public List<Group> getGroups() {
+        List<Group> result = new ArrayList<>();
+        for (String groupTypeUuid : Objects.requireNonNull(groupsData.getConfigurationSection("")).getKeys(false)) {
+            for (String groupUuid : Objects.requireNonNull(groupsData.getConfigurationSection(groupTypeUuid)).getKeys(false)) {
+                String groupName = groupsData.getString(groupTypeUuid+"."+groupUuid+".name");
+                List<UUID> members = new ArrayList<>();
+                groupsData.getStringList(groupTypeUuid+"."+groupUuid+".members").forEach(s -> members.add(UUID.fromString(s)));
+                Group newGroup = new Group(UUID.fromString(groupUuid), UUID.fromString(groupTypeUuid),groupName, members);
+                result.add(newGroup);
+            }
+        }
+        return result;
     }
 
     public void writeGroup(Group group) {

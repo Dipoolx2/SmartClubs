@@ -76,6 +76,14 @@ public class DataManager {
         return false;
     }
 
+    public List<Group> getGroups() {
+        if (USE_LOCAL_DATA) {
+            return localDataManager.groupsData.getGroups();
+        }
+
+        return null;
+    }
+
     // --- PROFILE DATA ---
     public void addProfileToData(PlayerProfile profile) {
         if (USE_LOCAL_DATA) {

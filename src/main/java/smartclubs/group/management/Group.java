@@ -3,6 +3,7 @@ package smartclubs.group.management;
 import smartclubs.profile.PlayerProfile;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,6 +18,13 @@ public class Group {
         this.groupType = groupType;
         this.uniqueId = UUID.randomUUID();
         this.members = new HashSet<>();
+    }
+
+    public Group(UUID uuid, UUID groupType, String groupName, List<UUID> members) {
+        this.uniqueId = uuid;
+        this.groupType = groupType;
+        this.groupName = groupName;
+        this.members = new HashSet<>(members);
     }
 
     protected void addProfileToGroup(UUID profileUuid) {
