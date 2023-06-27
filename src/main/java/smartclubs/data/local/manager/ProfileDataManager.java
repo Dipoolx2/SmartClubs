@@ -39,7 +39,6 @@ public class ProfileDataManager {
                 .collect(Collectors.toList());
     }
 
-
     public List<PlayerProfile> getPlayerProfiles() {
         List<PlayerProfile> playerProfiles = new ArrayList<>();
         for (String profileUuid : Objects.requireNonNull(profilesData.getConfigurationSection("")).getKeys(false)) {
@@ -84,6 +83,22 @@ public class ProfileDataManager {
             return false;
         }
         return true;
+    }
+
+    public boolean deleteGroupsOfTypeFromProfile(UUID profileUuid, UUID typeUuid) {
+        String path = profileUuid.toString() + ".groups." + typeUuid.toString();
+        System.out.println(path);
+        if (!this.profilesData.contains(path)) {
+            return true;
+        }
+        try {
+            this.profilesData.set(path, null);
+            this.profilesData.save(this.profilesFile);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void writeProfile(PlayerProfile profile) {

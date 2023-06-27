@@ -6,9 +6,10 @@ authors: [Zygro]
 description: Custom player groups for your Spigot server.
 
 commands:
-  test:
-    description: Tests the commands out
-    usage: /<command>
+  smartclubs:
+    description: SmartClubs admin commands.
+    usage: /<command> [arguments]
+    aliases: [sc]
   typecreate:
     description: Creates new group types.
     usage: /<command> <name>

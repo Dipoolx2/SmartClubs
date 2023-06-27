@@ -5,6 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import smartclubs.SmartClubs;
 import smartclubs.data.local.LocalDataManager;
+import smartclubs.data.local.manager.ProfileDataManager;
 import smartclubs.group.management.Group;
 import smartclubs.group.management.GroupType;
 import smartclubs.profile.PlayerProfile;
@@ -137,6 +138,10 @@ public class DataManager {
         }
 
         return false;
+    }
+
+    public ProfileDataManager getProfileDataManager() {
+        return this.localDataManager.profileData;
     }
 
 }

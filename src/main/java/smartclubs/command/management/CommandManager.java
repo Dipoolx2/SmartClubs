@@ -9,6 +9,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import smartclubs.command.commands.smartclubs.SmartclubsCommand;
+import smartclubs.command.commands.smartclubs.trouble.SmartclubsIssuesCommand;
+import smartclubs.command.commands.smartclubs.trouble.SmartclubsIssuesFixCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +39,13 @@ public class CommandManager implements CommandExecutor {
         this.baseCommands.add(groupJoinCommand);
         GroupManage groupManageCommand = new GroupManage();
         this.baseCommands.add(groupManageCommand);
+
+        SmartclubsCommand smartclubsCommand = new SmartclubsCommand();
+        SmartclubsIssuesFixCommand smartclubsIssuesFixCommand = new SmartclubsIssuesFixCommand();
+        SmartclubsIssuesCommand smartclubsIssuesCommand = new SmartclubsIssuesCommand();
+        smartclubsIssuesCommand.subCommands.add(smartclubsIssuesFixCommand);
+        smartclubsCommand.subCommands.add(smartclubsIssuesCommand);
+        this.baseCommands.add(smartclubsCommand);
     }
 
     private void registerCommands() {

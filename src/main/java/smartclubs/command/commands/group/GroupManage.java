@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class GroupManage extends BaseCommand {
     public GroupManage() {
-        super("groupmanage", "smartclubs.groupmanage", "/groupmanage <group-type>");
+        super("groupmanage", SmartClubs.PERM_BASE+".groupmanage", "/groupmanage <group-type>");
         aliases.add("gmanage");
     }
 
