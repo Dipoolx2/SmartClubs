@@ -9,8 +9,10 @@ import smartclubs.group.management.Group;
 import smartclubs.group.management.GroupType;
 import smartclubs.profile.PlayerProfile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class DataManager {
     private SmartClubs pl;
@@ -80,7 +82,14 @@ public class DataManager {
         if (USE_LOCAL_DATA) {
             return localDataManager.groupsData.getGroups();
         }
+        return null;
+    }
 
+    // Returns null if there's an error reading.
+    public Group getGroupData(UUID groupTypeUuid, UUID uuid) {
+        if (USE_LOCAL_DATA) {
+            return localDataManager.groupsData.getGroupData(groupTypeUuid, uuid);
+        }
         return null;
     }
 
@@ -104,6 +113,13 @@ public class DataManager {
         }
         if (USE_LOCAL_DATA) {
             return localDataManager.profileData.getPlayerProfile(player.getUniqueId());
+        }
+        return null;
+    }
+
+    public List<UUID> getPlayerGroupsByType(UUID playerUuid, UUID groupTypeUuid) {
+        if (USE_LOCAL_DATA) {
+            return localDataManager.profileData.getPlayerGroupsByType(playerUuid, groupTypeUuid);
         }
         return null;
     }

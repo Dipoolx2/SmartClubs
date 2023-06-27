@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class GroupDataManager {
     private JavaPlugin pl;
@@ -39,6 +40,33 @@ public class GroupDataManager {
             }
         }
         return result;
+    }
+
+    public Group getGroupData(UUID typeUuid, UUID groupUuid) {
+        if (!groupsData.contains(typeUuid.toString())) {
+            pl.getLogger().severe("Error: Can't find queried group type id in local data.");
+            return null;
+        }
+        if (!groupsData.contains(typeUuid+"."+groupUuid.toString())) {
+            pl.getLogger().severe("Error: Can't find queried group id in local data.");
+            return null;
+        }
+        if (!groupsData.contains(typeUuid+"."+groupUuid+".name")) {
+            pl.getLogger().severe("Error: Invalid group entry in data/groups.yml. At:");
+            pl.getLogger().severe("Type id: " + typeUuid + ", group id: " + groupUuid);
+            return null;
+        }
+        String groupName = groupsData.getString(typeUuid+"."+groupUuid+".name");
+        List<UUID> members = new ArrayList<>();
+        if (groupsData.contains(typeUuid+"."+groupUuid+".members")) {
+            members.addAll(
+                    groupsData.getStringList(typeUuid+"."+groupUuid+".members")
+                            .stream()
+                            .map(UUID::fromString)
+                            .collect(Collectors.toList())
+            );
+        }
+        return new Group(groupUuid, typeUuid, groupName, members);
     }
 
     public void writeGroup(Group group) {

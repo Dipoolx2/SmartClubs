@@ -1,7 +1,5 @@
 package smartclubs.data.local.manager;
 
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import smartclubs.group.management.Group;
@@ -12,6 +10,7 @@ import smartclubs.profile.ProfileData;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ProfileDataManager {
     private JavaPlugin pl;
@@ -24,6 +23,22 @@ public class ProfileDataManager {
         if (createProfilesFile())
             initializeProfilesFile();
     }
+
+    public List<UUID> getPlayerGroupsByType(UUID profileUuid, UUID groupTypeUuid) {
+        if (!profilesData.isConfigurationSection(profileUuid.toString())) {
+            pl.getLogger().severe("Error: queried profile UUID " + profileUuid.toString() + " is not in local storage.");
+            return null;
+        }
+        if (!profilesData.contains(profileUuid + ".groups." + groupTypeUuid.toString())) {
+            return new ArrayList<>();
+        }
+        List<String> stringList = profilesData.getStringList(profileUuid + ".groups." + groupTypeUuid.toString());
+        pl.getLogger().info(stringList.toString());
+        return stringList.stream()
+                .map(UUID::fromString)
+                .collect(Collectors.toList());
+    }
+
 
     public List<PlayerProfile> getPlayerProfiles() {
         List<PlayerProfile> playerProfiles = new ArrayList<>();
@@ -73,7 +88,7 @@ public class ProfileDataManager {
 
     public void writeProfile(PlayerProfile profile) {
         ProfileData profileData = new ProfileData(profile);
-        profilesData.set(profileData.profileOwnerUuid.toString()+".profile-owner", profileData.profileOwnerUuid.toString());
+        profilesData.set(profileData.profileOwnerUuid.toString() + ".profile-owner", profileData.profileOwnerUuid.toString());
         try {
             profilesData.save(profilesFile);
         } catch (IOException ex) {

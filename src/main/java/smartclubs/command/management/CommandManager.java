@@ -1,10 +1,9 @@
 package smartclubs.command.management;
 
 import smartclubs.SmartClubs;
-import smartclubs.command.commands.TestCommand;
-import smartclubs.command.commands.TestTwoCommand;
 import smartclubs.command.commands.group.GroupCreate;
 import smartclubs.command.commands.group.GroupJoin;
+import smartclubs.command.commands.group.GroupManage;
 import smartclubs.command.commands.grouptype.TypeCreate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -28,11 +27,6 @@ public class CommandManager implements CommandExecutor {
     }
 
     private void initializeCommands() {
-        TestCommand testCommand = new TestCommand();
-        this.baseCommands.add(testCommand);
-        TestTwoCommand testTwoCommand = new TestTwoCommand(testCommand);
-        testCommand.subCommands.add(testTwoCommand);
-
         TypeCreate typeCreateCommand = new TypeCreate();
         this.baseCommands.add(typeCreateCommand);
 
@@ -40,6 +34,8 @@ public class CommandManager implements CommandExecutor {
         this.baseCommands.add(groupCreateCommand);
         GroupJoin groupJoinCommand = new GroupJoin();
         this.baseCommands.add(groupJoinCommand);
+        GroupManage groupManageCommand = new GroupManage();
+        this.baseCommands.add(groupManageCommand);
     }
 
     private void registerCommands() {
@@ -79,7 +75,7 @@ public class CommandManager implements CommandExecutor {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            commandSender.sendMessage(ChatColor.RED + "Improper usage of command (" + base.syntax + ").");
+            commandSender.sendMessage(ChatColor.RED + "An error occurred. Please modify your command or try again later.");
         }
 
         return true;

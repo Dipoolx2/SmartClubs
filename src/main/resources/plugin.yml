@@ -21,3 +21,7 @@ commands:
     description: Joins groups.
     usage: /<command> <type> <name>
     aliases: [gjoin]
+  groupmanage:
+    description: Lets you manage your groups.
+    usage: /<command> <type-name>
+    aliases: [gmanage]
